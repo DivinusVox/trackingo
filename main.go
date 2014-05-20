@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"encoding/json"
+	"encoding/json"
 	"fmt"
 	//"log"
         "strconv"
@@ -26,7 +26,7 @@ func main() {
             r.Get("", GetEvents)
             r.Get("/:id", GetEvent)
             r.Post("", CreateEvent)
-            //r.Put("/:id", UpdateEvent)
+            r.Put("/:id", UpdateEvent)
             //r.Delete("/:id", DeleteEvent)
 
             // DAILY DATA
@@ -78,5 +78,21 @@ func GetEvent(req *http.Request, r render.Render, db DB, params martini.Params) 
 }
 
 func CreateEvent(req *http.Request, r render.Render, db DB, params martini.Params) {
-    fmt.Println(req)
+    t := DecodeJSON(req)
+    db.Add(t)
+    r.JSON(202, t)
+}
+
+func UpdateEvent(req *http.Request, r render.Render, db DB, params martini.Params) {
+    t := DecodeJSON(req)
+    db.Update(t)
+    r.JSON(202, t)
+}
+
+func DecodeJSON(req *http.Request) (*Event) {
+    decoder := json.NewDecoder(req.Body)
+    var t Event
+    decoder.Decode(&t)
+    fmt.Println(t)
+    return &t
 }
