@@ -28,11 +28,10 @@ func init() {
     }
     start := time.Date(2014, time.May, 20, 0, 0, 0, 0, time.UTC)
     end := time.Date(2015, time.May, 20, 0, 0, 0, 0, time.UTC)
-    event := Event{1, "tester", "pushups", start, end, 1, []Record{}}
-    db.Add(&event)
-    db.Add(&event)
-    db.Add(&event)
-    db.Add(&event)
+    db.Add(&Event{1, "tester", "pushups", start, end, 1, []Record{}})
+    db.Add(&Event{1, "tester2", "pushups", start, end, 1, []Record{}})
+    db.Add(&Event{1, "tester3", "pushups", start, end, 1, []Record{}})
+    db.Add(&Event{1, "tester4", "pushups", start, end, 1, []Record{}})
 }
 
 func (db *eventsDB) GetAll() []*Event {
